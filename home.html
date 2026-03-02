@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>الصفحة الرئيسية | تصميم موفي احترافي</title>
+    <title>بصمة | تصميم احترافي</title>
     <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <!-- Google Fonts: Cairo -->
@@ -17,102 +17,73 @@
 
         body {
             font-family: 'Cairo', sans-serif;
-            background-color: #f9f9fc;
-            color: #333;
+            background-color: #0a0a0f; /* قاعدة سوداء */
+            color: #e0e0e0;
             line-height: 1.6;
             transition: background-color 0.3s ease, color 0.3s ease;
             scroll-behavior: smooth;
+            position: relative;
+            min-height: 100vh;
         }
 
-        /* الوضع الليلي (دارك مود) */
-        body.dark-mode {
-            background-color: #1a1a2e;
-            color: #e0e0e0;
+        /* الخلفية الرئيسية - تدرج من الأسود إلى الموفي الفاتح */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 30% 50%, #1a0f2a 0%, #0a0a0f 80%);
+            z-index: -2;
         }
 
-        body.dark-mode .navbar,
-        body.dark-mode .info-card,
-        body.dark-mode .contact-form,
-        body.dark-mode .hero {
-            background-color: #16213e;
-            color: #eee;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        /* عناصر عشوائية متحركة (ستتم إضافتها عبر JS) */
+        .floating-particle {
+            position: fixed;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.2;
+            filter: blur(1px) drop-shadow(0 0 6px #b786f0);
+            animation: floatParticle 25s infinite alternate ease-in-out;
         }
 
-        body.dark-mode .nav-links a {
-            color: #ddd;
+        @keyframes floatParticle {
+            0% { transform: translate(0, 0) rotate(0deg) scale(1); }
+            100% { transform: translate(30px, -30px) rotate(10deg) scale(1.1); }
         }
 
-        body.dark-mode .nav-links a:hover {
-            color: #b786f0;
+        /* بصمات كبيرة عائمة (تبقى) */
+        .floating-fingerprint {
+            position: fixed;
+            bottom: 10%;
+            right: 5%;
+            font-size: 8rem;
+            color: rgba(138, 43, 226, 0.03);
+            transform: rotate(10deg);
+            z-index: -1;
+            animation: float 15s ease-in-out infinite;
         }
 
-        body.dark-mode .info-item a {
-            color: #ccc;
+        .floating-fingerprint.second {
+            top: 10%;
+            left: 5%;
+            font-size: 12rem;
+            color: rgba(138, 43, 226, 0.02);
+            transform: rotate(-15deg);
+            animation: float 20s ease-in-out infinite reverse;
         }
 
-        body.dark-mode .info-item i {
-            background-color: rgba(183, 134, 240, 0.2);
-            color: #b786f0;
-        }
-
-        body.dark-mode .info-item:hover i {
-            background-color: #b786f0;
-            color: #16213e;
-        }
-
-        body.dark-mode .social-links a {
-            background-color: #2a2a4a;
-            color: #ccc;
-        }
-
-        body.dark-mode .social-links a:hover {
-            background-color: #b786f0;
-            color: #16213e;
-        }
-
-        body.dark-mode .form-group input,
-        body.dark-mode .form-group select,
-        body.dark-mode .form-group textarea {
-            background-color: #2a2a4a;
-            border-color: #3a3a6a;
-            color: #eee;
-        }
-
-        body.dark-mode .form-group input:focus,
-        body.dark-mode .form-group select:focus,
-        body.dark-mode .form-group textarea:focus {
-            border-color: #b786f0;
-            box-shadow: 0 0 0 3px rgba(183, 134, 240, 0.3);
-        }
-
-        body.dark-mode .submit-btn {
-            background-color: #b786f0;
-            color: #16213e;
-        }
-
-        body.dark-mode .submit-btn:hover {
-            background-color: #9f6fd9;
-        }
-
-        body.dark-mode .map-placeholder {
-            background: linear-gradient(145deg, #2a2a4a, #1e1e3a);
-        }
-
-        body.dark-mode .download-cv {
-            background-color: rgba(183, 134, 240, 0.2);
-            color: #b786f0;
-        }
-
-        body.dark-mode .download-cv:hover {
-            background-color: #b786f0;
-            color: #16213e;
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(10deg) scale(1); }
+            50% { transform: translateY(-30px) rotate(15deg) scale(1.05); }
         }
 
         /* شريط التنقل */
         .navbar {
-            background-color: #fff;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            background-color: rgba(22, 22, 40, 0.8);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(138, 43, 226, 0.2);
             padding: 1rem 2rem;
             position: sticky;
             top: 0;
@@ -121,12 +92,22 @@
             justify-content: space-between;
             align-items: center;
             transition: background-color 0.3s ease;
+            border-bottom: 1px solid rgba(138, 43, 226, 0.3);
         }
 
         .logo {
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             font-weight: 700;
-            color: #8a2be2; /* موفي */
+            color: #b786f0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo i {
+            font-size: 2rem;
+            color: #b786f0;
+            filter: drop-shadow(0 0 8px #8a2be2);
         }
 
         .nav-links {
@@ -136,14 +117,16 @@
 
         .nav-links a {
             text-decoration: none;
-            color: #333;
+            color: #ddd;
             font-weight: 500;
             transition: color 0.3s ease;
             cursor: pointer;
+            font-size: 1.1rem;
         }
 
         .nav-links a:hover {
-            color: #8a2be2;
+            color: #b786f0;
+            text-shadow: 0 0 8px #8a2be2;
         }
 
         /* زر تبديل الوضع الليلي */
@@ -152,7 +135,7 @@
             border: none;
             font-size: 1.5rem;
             cursor: pointer;
-            color: #8a2be2;
+            color: #b786f0;
             transition: transform 0.2s;
             margin-right: 1rem;
         }
@@ -165,34 +148,34 @@
             max-width: 1200px;
             margin: 0 auto;
             padding: 4rem 1.5rem;
+            position: relative;
+            z-index: 2;
         }
 
         /* قسم الرئيسية (hero) */
         .hero {
-            background-color: #fff;
+            background-color: rgba(30, 20, 40, 0.6);
+            backdrop-filter: blur(10px);
             border-radius: 30px;
             padding: 4rem 2rem;
             margin-top: 2rem;
-            box-shadow: 0 10px 30px rgba(138, 43, 226, 0.08);
+            box-shadow: 0 10px 40px rgba(138, 43, 226, 0.3);
             text-align: center;
-            transition: background-color 0.3s ease;
+            border: 1px solid rgba(138, 43, 226, 0.2);
         }
 
         .hero h1 {
             font-size: 3rem;
             font-weight: 700;
-            color: #8a2be2;
+            color: #b786f0;
             margin-bottom: 1rem;
+            text-shadow: 0 0 15px #8a2be2;
         }
 
         .hero p {
             font-size: 1.3rem;
             max-width: 700px;
             margin: 0 auto 2rem;
-            color: #555;
-        }
-
-        body.dark-mode .hero p {
             color: #ccc;
         }
 
@@ -205,70 +188,179 @@
             border-radius: 50px;
             text-decoration: none;
             display: inline-block;
-            transition: background-color 0.3s ease, transform 0.2s;
+            transition: background-color 0.3s ease, transform 0.2s, box-shadow 0.3s;
             font-weight: 600;
+            box-shadow: 0 5px 20px rgba(138, 43, 226, 0.5);
         }
 
         .btn-primary:hover {
-            background-color: #7126b0;
+            background-color: #9f6fd9;
             transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(138, 43, 226, 0.8);
         }
 
-        /* قسم المشاريع (مثال) */
-        .projects {
+        /* قسم الخدمات */
+        .services {
             background-color: transparent;
         }
 
-        .projects h2 {
+        .services h2 {
             font-size: 2rem;
-            color: #8a2be2;
+            color: #b786f0;
             margin-bottom: 2rem;
             position: relative;
             display: inline-block;
+            text-shadow: 0 0 10px #8a2be2;
         }
 
-        .projects h2::after {
+        .services h2::after {
             content: '';
             position: absolute;
             bottom: -8px;
             right: 0;
             width: 70px;
             height: 3px;
-            background-color: #8a2be2;
+            background-color: #b786f0;
             border-radius: 3px;
+            box-shadow: 0 0 10px #8a2be2;
         }
 
-        .project-grid {
+        .services-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
             gap: 2rem;
         }
 
-        .project-card {
-            background-color: #fff;
+        .service-card {
+            background-color: rgba(30, 20, 40, 0.6);
+            backdrop-filter: blur(8px);
             border-radius: 20px;
-            padding: 2rem;
-            box-shadow: 0 10px 30px rgba(138, 43, 226, 0.08);
+            padding: 2rem 1.5rem;
+            box-shadow: 0 10px 30px rgba(138, 43, 226, 0.2);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             text-align: center;
+            border: 1px solid rgba(138, 43, 226, 0.2);
         }
 
-        .project-card:hover {
+        .service-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(138, 43, 226, 0.15);
+            box-shadow: 0 20px 40px rgba(138, 43, 226, 0.5);
+            border-color: #b786f0;
         }
 
-        body.dark-mode .project-card {
-            background-color: #16213e;
-        }
-
-        .project-card i {
+        .service-card i {
             font-size: 3rem;
-            color: #8a2be2;
+            color: #b786f0;
             margin-bottom: 1rem;
+            filter: drop-shadow(0 0 8px #8a2be2);
         }
 
-        /* قسم الاتصال (نفس التصميم السابق مع تحسينات بسيطة) */
+        .service-card h3 {
+            margin-bottom: 0.5rem;
+            font-size: 1.4rem;
+            color: #fff;
+        }
+
+        .service-card p {
+            font-size: 0.95rem;
+            color: #bbb;
+        }
+
+        /* قسم المهارات */
+        .skills-section {
+            position: relative;
+            border-radius: 50px;
+            padding: 4rem 2rem;
+            margin: 4rem auto;
+            color: #fff;
+        }
+
+        .skills-content {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .skills-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #b786f0;
+            margin-bottom: 2rem;
+            text-align: center;
+            text-shadow: 0 0 10px #8a2be2;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .skill-group {
+            background: rgba(30, 20, 40, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 30px;
+            padding: 2rem 1.5rem;
+            border: 1px solid rgba(138, 43, 226, 0.3);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .skill-group:hover {
+            transform: translateY(-8px);
+            border-color: #b786f0;
+            box-shadow: 0 20px 40px rgba(138, 43, 226, 0.4);
+        }
+
+        .skill-group h3 {
+            font-size: 1.7rem;
+            margin-bottom: 1.5rem;
+            color: #b786f0;
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            border-bottom: 2px solid rgba(138, 43, 226, 0.5);
+            padding-bottom: 0.5rem;
+        }
+
+        .skill-items {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+        }
+
+        .skill-item {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(138, 43, 226, 0.3);
+            padding: 0.5rem 1.2rem;
+            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            color: #eee;
+        }
+
+        .skill-item i {
+            color: #b786f0;
+            font-size: 1.1rem;
+            transition: color 0.3s ease;
+        }
+
+        .skill-item:hover {
+            background: #8a2be2;
+            border-color: #b786f0;
+            color: #fff;
+            transform: scale(1.05);
+            box-shadow: 0 0 15px #b786f0;
+        }
+
+        .skill-item:hover i {
+            color: #fff;
+        }
+
+        /* قسم الاتصال */
         .contact-section {
             padding: 4rem 1.5rem;
         }
@@ -276,10 +368,11 @@
         .section-title {
             font-size: 2rem;
             font-weight: 700;
-            color: #8a2be2;
+            color: #b786f0;
             margin-bottom: 2rem;
             position: relative;
             display: inline-block;
+            text-shadow: 0 0 10px #8a2be2;
         }
 
         .section-title::after {
@@ -289,8 +382,9 @@
             right: 0;
             width: 70px;
             height: 3px;
-            background-color: #8a2be2;
+            background-color: #b786f0;
             border-radius: 3px;
+            box-shadow: 0 0 10px #8a2be2;
         }
 
         .two-columns {
@@ -301,17 +395,18 @@
         }
 
         .info-card {
-            background-color: #fff;
+            background: rgba(30, 20, 40, 0.7);
+            backdrop-filter: blur(10px);
             border-radius: 20px;
             padding: 2rem;
-            box-shadow: 0 10px 30px rgba(138, 43, 226, 0.08);
+            box-shadow: 0 10px 30px rgba(138, 43, 226, 0.2);
+            border: 1px solid rgba(138, 43, 226, 0.3);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
-            height: fit-content;
         }
 
         .info-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 20px 40px rgba(138, 43, 226, 0.15);
+            box-shadow: 0 20px 40px rgba(138, 43, 226, 0.4);
         }
 
         .info-item {
@@ -325,8 +420,8 @@
         .info-item i {
             width: 45px;
             height: 45px;
-            background-color: rgba(138, 43, 226, 0.1);
-            color: #8a2be2;
+            background-color: rgba(138, 43, 226, 0.2);
+            color: #b786f0;
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -336,18 +431,18 @@
         }
 
         .info-item:hover i {
-            background-color: #8a2be2;
-            color: #fff;
+            background-color: #b786f0;
+            color: #0a0a0f;
         }
 
         .info-item a {
             text-decoration: none;
-            color: #333;
+            color: #ddd;
             transition: color 0.2s;
         }
 
         .info-item a:hover {
-            color: #8a2be2;
+            color: #b786f0;
         }
 
         .social-links {
@@ -360,27 +455,31 @@
         .social-links a {
             width: 45px;
             height: 45px;
-            background-color: #f0f0f5;
+            background-color: rgba(138, 43, 226, 0.2);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #555;
+            color: #b786f0;
             font-size: 1.3rem;
             transition: all 0.3s ease;
+            border: 1px solid rgba(138, 43, 226, 0.3);
         }
 
         .social-links a:hover {
-            background-color: #8a2be2;
-            color: #fff;
+            background-color: #b786f0;
+            color: #0a0a0f;
             transform: scale(1.1);
+            box-shadow: 0 0 20px #b786f0;
         }
 
         .contact-form {
-            background-color: #fff;
+            background: rgba(30, 20, 40, 0.7);
+            backdrop-filter: blur(10px);
             border-radius: 20px;
             padding: 2rem;
-            box-shadow: 0 10px 30px rgba(138, 43, 226, 0.08);
+            box-shadow: 0 10px 30px rgba(138, 43, 226, 0.2);
+            border: 1px solid rgba(138, 43, 226, 0.3);
         }
 
         .form-group {
@@ -391,10 +490,6 @@
             display: block;
             margin-bottom: 0.5rem;
             font-weight: 600;
-            color: #444;
-        }
-
-        body.dark-mode .form-group label {
             color: #ccc;
         }
 
@@ -403,20 +498,21 @@
         .form-group textarea {
             width: 100%;
             padding: 0.9rem 1rem;
-            border: 1px solid #e0e0e7;
+            border: 1px solid rgba(138, 43, 226, 0.3);
             border-radius: 12px;
             font-family: 'Cairo', sans-serif;
             font-size: 1rem;
             transition: border-color 0.3s ease, box-shadow 0.3s ease;
-            background-color: #fafaff;
+            background-color: rgba(0, 0, 0, 0.3);
+            color: #eee;
         }
 
         .form-group input:focus,
         .form-group select:focus,
         .form-group textarea:focus {
             outline: none;
-            border-color: #8a2be2;
-            box-shadow: 0 0 0 3px rgba(138, 43, 226, 0.2);
+            border-color: #b786f0;
+            box-shadow: 0 0 0 3px rgba(138, 43, 226, 0.3);
         }
 
         .submit-btn {
@@ -435,65 +531,69 @@
             align-items: center;
             justify-content: center;
             gap: 0.5rem;
+            box-shadow: 0 5px 20px rgba(138, 43, 226, 0.5);
         }
 
         .submit-btn:hover {
-            background-color: #7126b0;
+            background-color: #9f6fd9;
             transform: scale(1.02);
-            box-shadow: 0 10px 20px rgba(138, 43, 226, 0.3);
+            box-shadow: 0 10px 30px rgba(138, 43, 226, 0.8);
         }
 
         .download-cv {
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            background-color: rgba(138, 43, 226, 0.1);
-            color: #8a2be2;
+            background-color: rgba(138, 43, 226, 0.2);
+            color: #b786f0;
             padding: 0.6rem 1.2rem;
             border-radius: 30px;
             text-decoration: none;
             font-weight: 600;
             transition: background-color 0.3s ease, color 0.3s;
             margin-top: 0.5rem;
+            border: 1px solid rgba(138, 43, 226, 0.3);
         }
 
         .download-cv:hover {
-            background-color: #8a2be2;
-            color: #fff;
+            background-color: #b786f0;
+            color: #0a0a0f;
         }
 
         .map-placeholder {
             margin-top: 3rem;
-            background: linear-gradient(145deg, #e0d0f0, #d0c0e8);
+            background: rgba(30, 20, 40, 0.6);
             height: 200px;
             border-radius: 30px;
             display: flex;
             align-items: center;
             justify-content: center;
             overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" opacity="0.2"><path d="M10,50 Q30,30 50,50 T90,50" stroke="%238a2be2" fill="none" stroke-width="2"/><circle cx="50" cy="50" r="5" fill="%238a2be2"/><circle cx="20" cy="30" r="3" fill="%238a2be2"/><circle cx="80" cy="70" r="3" fill="%238a2be2"/></svg>');
-            background-repeat: repeat;
-            background-size: 150px;
+            box-shadow: 0 5px 20px rgba(138, 43, 226, 0.3);
+            border: 1px solid rgba(138, 43, 226, 0.3);
+            backdrop-filter: blur(5px);
+            position: relative;
         }
 
-        .map-placeholder .map-marker {
-            background-color: #8a2be2;
-            color: white;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.8rem;
-            box-shadow: 0 5px 15px rgba(138, 43, 226, 0.5);
-            border: 3px solid white;
-            transition: transform 0.3s ease;
+        .map-placeholder .map-content {
+            text-align: center;
+            color: #b786f0;
+            font-size: 1.5rem;
+            font-weight: 600;
+            z-index: 2;
         }
 
-        .map-placeholder:hover .map-marker {
-            transform: scale(1.1);
+        .map-placeholder .map-content i {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+            display: block;
+            filter: drop-shadow(0 0 10px #8a2be2);
+        }
+
+        .map-placeholder .map-content span {
+            display: block;
+            font-size: 1.2rem;
+            color: #ddd;
         }
 
         .form-message {
@@ -504,25 +604,25 @@
         }
 
         .form-message.success {
-            background-color: #d4edda;
-            color: #155724;
+            background-color: #1e3a2a;
+            color: #a3d8b0;
             display: block;
         }
 
         .form-message.error {
-            background-color: #f8d7da;
-            color: #721c24;
+            background-color: #3e1e1e;
+            color: #f8a5a5;
             display: block;
         }
 
-        body.dark-mode .form-message.success {
-            background-color: #1e3a2a;
-            color: #a3d8b0;
-        }
-
-        body.dark-mode .form-message.error {
-            background-color: #3e1e1e;
-            color: #f8a5a5;
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: #aaa;
+            font-size: 0.9rem;
+            border-top: 1px solid rgba(138, 43, 226, 0.3);
+            background-color: rgba(10, 10, 15, 0.8);
+            backdrop-filter: blur(5px);
         }
 
         @media (max-width: 768px) {
@@ -547,58 +647,115 @@
             .hero p {
                 font-size: 1.1rem;
             }
+
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
-<body>
-    <!-- شريط التنقل مع زر الدارك مود -->
+<body class="dark-mode">
+    <!-- بصمات كبيرة عائمة -->
+    <div class="floating-fingerprint"><i class="fas fa-fingerprint"></i></div>
+    <div class="floating-fingerprint second"><i class="fas fa-fingerprint"></i></div>
+
+    <!-- العناصر العشوائية ستتم إضافتها هنا بواسطة JavaScript -->
+
+    <!-- شريط التنقل -->
     <nav class="navbar">
-        <div class="logo"><i class="fas fa-paint-brush" style="margin-left: 8px;"></i>موفي</div>
+        <div class="logo">
+            <i class="fas fa-fingerprint"></i> بصمة
+        </div>
         <div class="nav-links">
             <a href="#home">الرئيسية</a>
-            <a href="#projects">مشاريع</a>
+            <a href="#services">خدماتنا</a>
+            <a href="#skills">المهارات</a>
             <a href="#contact">اتصل بنا</a>
         </div>
         <button class="dark-mode-toggle" id="darkModeToggle" aria-label="تبديل الوضع الليلي">
-            <i class="fas fa-moon"></i>
+            <i class="fas fa-sun"></i>
         </button>
     </nav>
 
-    <!-- قسم الرئيسية (يظهر أولاً) -->
+    <!-- قسم الرئيسية -->
     <section id="home">
         <div class="hero">
             <h1>مرحباً بك في عالم الإبداع</h1>
-            <p>نصمم تجارب رقمية فريدة تجمع بين الجمال والوظيفة. ألوان موفية ناعمة ولمسات عصرية.</p>
+            <p>نصمم تجارب رقمية فريدة تجمع بين الجمال والوظيفة. لمسات موفية عصرية وتقنيات متطورة.</p>
             <a href="#contact" class="btn-primary">ابدأ المحادثة</a>
         </div>
     </section>
 
-    <!-- قسم المشاريع (مثال) -->
-    <section id="projects" class="projects">
-        <h2>أحدث المشاريع</h2>
-        <div class="project-grid">
-            <div class="project-card">
+    <!-- قسم الخدمات -->
+    <section id="services" class="services">
+        <h2>خدماتنا</h2>
+        <div class="services-grid">
+            <div class="service-card">
                 <i class="fas fa-paint-brush"></i>
-                <h3>تصميم هوية بصرية</h3>
-                <p>هوية متكاملة لشركة ناشئة بألوان موفية.</p>
+                <h3>تصميم ويب</h3>
+                <p>Web Design · واجهات جذابة وتجربة مستخدم سلسة</p>
             </div>
-            <div class="project-card">
+            <div class="service-card">
                 <i class="fas fa-code"></i>
-                <h3>تطوير موقع ويب</h3>
-                <p>موقع تفاعلي متجاوب مع تجربة مستخدم سلسة.</p>
+                <h3>تطوير ويب</h3>
+                <p>Web Development · برمجة مواقع وتطبيقات متكاملة</p>
             </div>
-            <div class="project-card">
-                <i class="fas fa-mobile-alt"></i>
-                <h3>تصميم تطبيق جوال</h3>
-                <p>واجهات مستخدم عصرية وسهلة الاستخدام.</p>
+            <div class="service-card">
+                <i class="fas fa-file-alt"></i>
+                <h3>كتابة تقنية</h3>
+                <p>Technical Writing · أدلة، مقالات، ووثائق تقنية</p>
+            </div>
+            <div class="service-card">
+                <i class="fas fa-pen-nib"></i>
+                <h3>تصميم جرافيك</h3>
+                <p>Graphic Design · هويات بصرية، تصاميم إعلانية</p>
             </div>
         </div>
     </section>
 
-    <!-- قسم الاتصال (بنفس التصميم السابق) -->
+    <!-- قسم المهارات -->
+    <section id="skills" class="skills-section">
+        <div class="skills-content">
+            <h2 class="skills-title">المهارات والأدوات</h2>
+            <div class="skills-grid">
+                <!-- المجموعة الأولى: التطوير والبرمجة -->
+                <div class="skill-group">
+                    <h3><i class="fas fa-laptop-code"></i> التطوير والبرمجة</h3>
+                    <div class="skill-items">
+                        <span class="skill-item"><i class="fab fa-html5"></i> HTML5</span>
+                        <span class="skill-item"><i class="fab fa-css3-alt"></i> CSS3</span>
+                        <span class="skill-item"><i class="fab fa-js"></i> JavaScript</span>
+                        <span class="skill-item"><i class="fab fa-php"></i> PHP</span>
+                        <span class="skill-item"><i class="fas fa-database"></i> MySQL</span>
+                        <span class="skill-item"><i class="fab fa-wordpress"></i> WordPress</span>
+                    </div>
+                </div>
+                <!-- المجموعة الثانية: التصميم البصري -->
+                <div class="skill-group">
+                    <h3><i class="fas fa-paint-brush"></i> التصميم البصري</h3>
+                    <div class="skill-items">
+                        <span class="skill-item"><i class="fab fa-adobe"></i> Adobe Photoshop</span>
+                        <span class="skill-item"><i class="fas fa-paint-brush"></i> Canva</span>
+                        <span class="skill-item"><i class="fab fa-figma"></i> Figma</span>
+                    </div>
+                </div>
+                <!-- المجموعة الثالثة: المحتوى والاستراتيجية -->
+                <div class="skill-group">
+                    <h3><i class="fas fa-pen-fancy"></i> المحتوى والاستراتيجية</h3>
+                    <div class="skill-items">
+                        <span class="skill-item"><i class="fas fa-hashtag"></i> Social Media Copywriting</span>
+                        <span class="skill-item"><i class="fas fa-search"></i> SEO</span>
+                        <span class="skill-item"><i class="fas fa-book"></i> صياغة الأدلة التقنية</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- قسم الاتصال -->
     <section id="contact" class="contact-section">
         <h2 class="section-title">تواصل معي</h2>
-        <p style="margin-bottom: 1rem; color: #555;">سأكون سعيدًا بالرد على استفساراتك ومساعدتك.</p>
+        <p style="margin-bottom: 1rem; color: #ccc;">سأكون سعيدًا بالرد على استفساراتك ومساعدتك.</p>
 
         <div class="two-columns">
             <!-- العمود الأيمن: معلومات الاتصال -->
@@ -607,15 +764,15 @@
                     <i class="fas fa-envelope"></i>
                     <div>
                         <strong>البريد الإلكتروني</strong><br>
-                        <a href="mailto:example@mauve.com">example@mauve.com</a>
+                        <a href="mailto:example@basma.com">example@basma.com</a>
                     </div>
                 </div>
 
                 <div class="info-item">
                     <i class="fab fa-whatsapp"></i>
                     <div>
-                        <strong>واتساب (اختياري)</strong><br>
-                        <a href="https://wa.me/966500000000" target="_blank">+966 50 000 0000</a>
+                        <strong>واتساب</strong><br>
+                        <a href="https://wa.me/218910000000" target="_blank">+218 91 000 0000</a>
                     </div>
                 </div>
 
@@ -672,22 +829,67 @@
             </div>
         </div>
 
-        <!-- خريطة صغيرة (اختياري) -->
+        <!-- خريطة طرابلس، ليبيا -->
         <div class="map-placeholder">
-            <div class="map-marker">
-                <i class="fas fa-map-marker-alt"></i>
+            <div class="map-content">
+                <i class="fas fa-map-marked-alt"></i>
+                <span>طرابلس، ليبيا</span>
+                <span style="font-size: 1rem; margin-top: 0.5rem;">📍 موقعنا الرئيسي</span>
             </div>
         </div>
     </section>
 
     <!-- تذييل -->
-    <footer style="text-align: center; padding: 2rem; color: #aaa; font-size: 0.9rem; border-top: 1px solid #eee;">
-        © 2025 جميع الحقوق محفوظة. تصميم مستوحى من ألوان الموفي.
+    <footer>
+        © 2026 جميع الحقوق المحفوظة شركة بصمة
     </footer>
 
     <script>
         (function() {
-            // التمرير السلس عند النقر على روابط القائمة
+            // إنشاء عناصر عشوائية متحركة (بدلاً من الخطوط)
+            function createRandomParticles() {
+                const numberOfParticles = 15; // قليل جداً
+                const body = document.body;
+                const iconTypes = ['fa-fingerprint', 'fa-circle', 'fa-dot-circle', 'fa-star', 'fa-asterisk'];
+                
+                for (let i = 0; i < numberOfParticles; i++) {
+                    const particle = document.createElement('div');
+                    particle.className = 'floating-particle';
+                    
+                    // اختيار أيقونة عشوائية أو شكل
+                    const randomIcon = iconTypes[Math.floor(Math.random() * iconTypes.length)];
+                    const iconElement = document.createElement('i');
+                    iconElement.className = `fas ${randomIcon}`;
+                    
+                    // إذا كانت أيقونة بصمة، نجعلها أصغر
+                    if (randomIcon === 'fa-fingerprint') {
+                        iconElement.style.fontSize = Math.floor(Math.random() * 30 + 20) + 'px';
+                    } else {
+                        iconElement.style.fontSize = Math.floor(Math.random() * 20 + 10) + 'px';
+                    }
+                    
+                    // لون موفي مع شفافية
+                    iconElement.style.color = `rgba(138, 43, 226, ${Math.random() * 0.2 + 0.1})`;
+                    
+                    // وضع عشوائي
+                    const top = Math.random() * 100;
+                    const left = Math.random() * 100;
+                    particle.style.top = top + '%';
+                    particle.style.left = left + '%';
+                    
+                    // حركة مختلفة لكل عنصر (تأخير عشوائي)
+                    particle.style.animationDelay = (Math.random() * 10) + 's';
+                    particle.style.animationDuration = (Math.random() * 20 + 15) + 's'; // بطيء
+                    
+                    particle.appendChild(iconElement);
+                    body.appendChild(particle);
+                }
+            }
+
+            // استدعاء الدالة بعد تحميل الصفحة
+            window.addEventListener('load', createRandomParticles);
+
+            // التمرير السلس
             document.querySelectorAll('.nav-links a').forEach(anchor => {
                 anchor.addEventListener('click', function(e) {
                     e.preventDefault();
@@ -727,27 +929,28 @@
                 }, 4000);
             });
 
-            // وظيفة الدارك مود
+            // وظيفة الدارك مود (اختياري)
             const toggle = document.getElementById('darkModeToggle');
             const body = document.body;
             const icon = toggle.querySelector('i');
 
-            // التحقق من وجود تفضيل سابق في localStorage
-            if (localStorage.getItem('darkMode') === 'enabled') {
-                body.classList.add('dark-mode');
+            if (localStorage.getItem('darkMode') === 'disabled') {
+                body.classList.remove('dark-mode');
                 icon.classList.remove('fa-moon');
                 icon.classList.add('fa-sun');
+            } else {
+                localStorage.setItem('darkMode', 'enabled');
             }
 
             toggle.addEventListener('click', () => {
                 body.classList.toggle('dark-mode');
                 if (body.classList.contains('dark-mode')) {
-                    icon.classList.remove('fa-moon');
-                    icon.classList.add('fa-sun');
-                    localStorage.setItem('darkMode', 'enabled');
-                } else {
                     icon.classList.remove('fa-sun');
                     icon.classList.add('fa-moon');
+                    localStorage.setItem('darkMode', 'enabled');
+                } else {
+                    icon.classList.remove('fa-moon');
+                    icon.classList.add('fa-sun');
                     localStorage.setItem('darkMode', 'disabled');
                 }
             });
